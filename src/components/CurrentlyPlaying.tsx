@@ -1,5 +1,6 @@
 // src/components/CurrentlyPlaying.jsx
 
+import React from 'react';
 import CoverArt from "./CoverArt";
 import PlayControls from "./PlayControls";
 import SongTitle from "./SongTitle";

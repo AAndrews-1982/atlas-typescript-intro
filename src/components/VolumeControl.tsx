@@ -1,10 +1,17 @@
-// src/components/VolumeControl.jsx
+// src/components/VolumeControl.tsx
 
 // VolumeControl Component
 
 import React from 'react';
 
 export default function VolumeControl() {
+	const [volume, setVolume] = useState<number>(50); // Initial volume value
+
+  const handleVolumeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setVolume(Number(event.target.value)); // Update volume state
+  };  
+
+
   return (
     <div className="volume-wrapper flex items-center">
       <button className="volume-button h-6 w-6 flex items-center justify-center rounded-full hover:bg-gray-200 active:bg-gray-300 dark:hover:bg-gray-600 dark:active:bg-gray-700">
