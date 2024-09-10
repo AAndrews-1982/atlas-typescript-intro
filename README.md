@@ -1,10 +1,11 @@
 # atlas-typescript-intro
 
 ## Resources:
-### Watch:
-
+#### Watch:
 ### Typescript in 100 Seconds
 - Link: https://www.youtube.com/watch?v=zQnBQ4tB3ZA
+### React Typescript
+- Link: https://atlas-jswank.github.io/blog/how-to-use-typescript/#typescript-and-react
 
 ### Read:
 
