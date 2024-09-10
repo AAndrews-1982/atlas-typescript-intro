@@ -1,41 +1,20 @@
-# atlas-typescript-intro
+# Atlas Music Player
 
-## Resources:
-#### Watch:
-### Typescript in 100 Seconds
-- Link: https://www.youtube.com/watch?v=zQnBQ4tB3ZA
-### React Typescript
-- Link: https://atlas-jswank.github.io/blog/how-to-use-typescript/#typescript-and-react
+## Getting Started
 
-### Read:
+- Run `npm install` to install dependencies
+- Run `npm run dev` to start the dev server
+- Open `http://localhost:5173` in a browser
 
-- Why typescript?: Explains the motivation for using typescript over javascript.
-- Link: https://atlas-jswank.github.io/blog/typescript/
-- Using typescript: Explains the typescript compiler and the special typescript syntax.
-- Link: https://atlas-jswank.github.io/blog/how-to-use-typescript/
-- Typescript Cheat Sheet: Quick reference for typescript specific syntax.
-- Link: https://www.sitepen.com/blog/typescript-cheat-sheet
-- Typescript React Cheat Sheet; Reference for react specific typescript syntax.
-- Link: https://react-typescript-cheatsheet.netlify.app
+### Important Files/Folders
 
-## Tools:
+- `src`: All javascript/jsx code goes in this directory
+- `src/assets`: Any static assets such as images that are loaded through the javascript files goes here.
+- `index.html`: This is the html file that appears when the dev server starts up.
+- `src/app.jsx`: The is the main app component for the entire app.
 
-- Total TypeScript VS Code Extension Provides better explanations to common typescript errors directly in vs code.
-- Link: https://www.totaltypescript.com/vscode-extension
-- Pretty TypeScript Errors VS Code Extension Improves formatting of typescript errors in vs code.
-- Link: https://marketplace.visualstudio.com/items?itemName=yoavbls.pretty-ts-errors
+### Important Commands
 
-### Learning Objectives:
-
-- Explain the benefits of a type safe language
-- Explain the benefits of null safety in a language
-- Learn how to use typescript with react
-
-### Project Overview:
-
-This project builds on top of the music player design implemented in the last project. You will implement the functionality for the player using typescript.
-
-- #### Project Figma
-- Link: https://www.figma.com/design/6qiRGbMAIYK7AUoYOCohpq/Atlas-Music-Player?node-id=0-1
-- #### Project Demo
-- Link: https://atlas-typescript-intro.netlify.app
+- `npm run dev`: Starts dev server with Hot Module Reloading on port 5173. Anytime a file changes, the changes will automatocally be reflected in the browser
+- `npm run lint`: Run the lint checker with eslint to check for known linting issues
+- `npm run build`: Outputs the production files into the `dist` folder
