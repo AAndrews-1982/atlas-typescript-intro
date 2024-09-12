@@ -1,39 +1,51 @@
-// src/components/PlayListItem.tsx
+// Import necessary context and hooks
+import { useContext } from "react";
+import { AppContext } from "./AppContext";
 
-interface PlayListItemProps {
+// Define the types for the component props
+type PlayListItemProps = {
   songTitle: string;
   artist: string;
   playTime: string;
-  isSelected: boolean;
-  onClick: () => void;
-}
+};
 
-export default function PlayListItem({
+// Define and export the PlayListItem component
+export function PlayListItem({
   songTitle,
   artist,
   playTime,
-  isSelected,
-  onClick
 }: PlayListItemProps) {
+  // Access the app context
+  const context = useContext(AppContext);
+
+  // Throw an error if context is not available
+  if (!context) {
+    throw new Error("AppContext is not available");
+  }
+
+  // Destructure values from the context
+  const { songs, currentSong, setCurrentSong } = context;
+
+  // Function to handle click events on a song item
+  const handleSongClick = () => {
+    const songIndex = songs.findIndex((song) => song.title === songTitle);
+    setCurrentSong(songIndex);
+  };
+
   return (
     <div
-      className={`playlist-item-container mb-4 flex h-16 mx-auto w-full max-w-4x1 cursor-pointer items-center
-        justify-between p-4 rounded-lg text-base font-normal max-w-4xl w-full ${
-          isSelected
-            ? 'bg-gray-300 dark:bg-gray-700'
-            : 'bg-transparent hover:bg-gray-200 active:bg-gray-400 dark:hover:bg-gray-200 dark:active:bg-gray-400'
-        }`}
-      onClick={onClick}
+      onClick={handleSongClick}
+      className={`playlist-item mb-1 flex h-10 cursor-pointer items-center justify-between rounded-md text-sm font-medium ${songs[currentSong].title === songTitle ? "bg-hover dark:bg-dark-hover" : "hover:bg-hover dark:hover:bg-dark-hover"} active:bg-active dark:active:bg-dark-active`}
     >
-      <div className="song-details flex flex-col md:flex-row md:items-center md:space-x-6">
-        <div className="title font-semibold text-gray-800 dark:text-gray-600">
-          {songTitle}
-        </div>
-        <div className="artist-name text-sm text-gray-500 dark:text-gray-400">
+      {/* Display song information */}
+      <div className="song-details">
+        <div className="song-title text-sm font-bold mb-0">{songTitle}</div>
+        <div className="artist-name text-sm text-muted-text dark:text-dark-muted-text">
           {artist}
         </div>
       </div>
-      <div className="duration text-gray-500 dark:text-gray-400 text-sm md:text-base">
+      {/* Display play time */}
+      <div className="play-time text-sm text-muted-text dark:text-dark-muted-text">
         {playTime}
       </div>
     </div>

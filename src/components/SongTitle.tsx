@@ -1,22 +1,40 @@
-// src/components/SongTitle.jsx
+// Import necessary hooks and context
+import { useContext } from "react";
+import { AppContext } from "./AppContext";
 
-import React from 'react';
+// Define and export the SongTitle component
+export function SongTitle() {
+  // Access the app context
+  const context = useContext(AppContext);
 
-interface SongTitleProps {
-  title: string;
-  artist: string;
-}
+  // Throw an error if context is not available
+  if (!context) {
+    throw new Error("AppContext is not available");
+  }
 
-export default function SongTitle({ title, artist }: SongTitleProps) {
+  // Destructure values from the context
+  const { currentSong, songs } = context;
 
   return (
     <div className="song-details">
-      <h2 className="title mb-3 text-xl font-semibold">
-        {title}
-      </h2>
-      <p className="artist-name text-sm text-gray-500 dark:text-gray-400">
-        {artist}
-      </p>
+      {songs.length > 0 ? (
+        <>
+          <h2 className="song-title mb-2 text-3xl font-bold">
+            {songs[currentSong].title}
+          </h2>
+          <div className="artist-name mb-4 text-lg text-muted-text dark:text-dark-muted-text">
+            {songs[currentSong].artist}
+          </div>
+        </>
+      ) : (
+        <>
+          <h2 className="loading-title mb-2 text-3xl font-bold">Loading...</h2>
+          <div className="loading-artist mb-4 text-lg text-muted-text dark:text-dark-muted-text">
+            Loading...
+          </div>
+        </>
+      )}
     </div>
   );
 }
+

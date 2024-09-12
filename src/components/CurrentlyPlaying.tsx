@@ -1,25 +1,30 @@
-// src/components/CurrentlyPlaying.jsx
+// Import necessary components
+import { CoverArt } from "./CoverArt";
+import { PlayControls } from "./PlayControls";
+import { SongTitle } from "./SongTitle";
+import { VolumeControl } from "./VolumeControl";
 
-import React from 'react';
-import CoverArt from "./CoverArt";
-import PlayControls from "./PlayControls";
-import SongTitle from "./SongTitle";
-import VolumeControl from "./VolumeControl";
-
-export default function CurrentlyPlaying() {
-
+// Define and export the CurrentlyPlaying component
+export function CurrentlyPlaying() {
+  // Render the component
   return (
-    <div className="currently-playing-container mx-auto p-4 md:p-8 bg-white shadow-md rounded-lg bg-gray-800">
-      <CoverArt />
-      <div className="song-info mt-4">
+    <section className="currently-playing-container flex flex-col items-center p-6 w-full md:w-1/2">
+      {/* Display the cover art */}
+      <div className="cover-art-wrapper mb-4">
+        <CoverArt />
+      </div>
+      {/* Display the song title */}
+      <div className="song-title-wrapper mb-4">
         <SongTitle />
       </div>
-      <div className="controls mt-6 flex flex-col items-center">
+      {/* Display the play controls */}
+      <div className="play-controls-wrapper mb-4">
         <PlayControls />
-        <div className="volume-control mt-4 w-full">
-          <VolumeControl />
-        </div>
       </div>
-    </div>
+      {/* Display the volume control */}
+      <div className="volume-control-wrapper">
+        <VolumeControl />
+      </div>
+    </section>
   );
 }

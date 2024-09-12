@@ -1,42 +1,35 @@
-// AppContext.tsx
+// Import necessary modules and hooks
+import React, { createContext, ReactNode } from "react";
+import { usePlaylistData } from "../hooks/usePlaylistData";
 
-import React, { createContext, useState, useEffect } from "react";
-
-// Types
-type AppContextProps = {
-  children: React.ReactNode;
-};
-
-type Song = {
+// Define types for the context and props
+interface Song {
   title: string;
   artist: string;
   duration: string;
   cover: string;
-};
+}
 
-type AppContextType = {
+interface AppContextProps {
   songs: Song[];
-};
+  currentSong: number;
+  setCurrentSong: (index: number) => void;
+}
 
-// Create the context
-export const AppContext = createContext<AppContextType | undefined>(undefined);
+interface ContextProviderProps {
+  children: ReactNode;
+}
 
-// AppContext component that provides context to its children
-export const AppContextProvider: React.FC<AppContextProps> = ({ children }) => {
-  const [songs, setSongs] = useState<Song[]>([]);
+// Create the context with a default value of undefined
+export const AppContext = createContext<AppContextProps | undefined>(undefined);
 
-  useEffect(() => {
-    fetch(
-      "https://raw.githubusercontent.com/atlas-jswank/atlas-music-player-api/main/playlist",
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setSongs(data);
-      });
-  }, []);
+// ContextProvider component
+export const ContextProvider: React.FC<ContextProviderProps> = ({ children }) => {
+  // Use custom hook to get playlist data and state management functions
+  const { songs, currentSong, setCurrentSong } = usePlaylistData();
 
   return (
-    <AppContext.Provider value={{ songs }}>
+    <AppContext.Provider value={{ songs, currentSong, setCurrentSong }}>
       {children}
     </AppContext.Provider>
   );
