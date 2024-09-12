@@ -1,35 +1,44 @@
-// Custom Hook for fetching playlist data from API
+// Import necessary hooks from React
+import { useState, useEffect } from "react";
 
-import { useState, useEffect } from 'react';
-
-interface Song {
+// Define the type for Song
+type Song = {
   title: string;
   artist: string;
   duration: string;
-  coverArtUrl: string;
-}
+  cover: string;
+};
 
-const usePlaylistData = () => {
-  const [data, setData] = useState<Song[]>([]);
+// Custom hook for fetching and managing playlist data
+export function usePlaylistData() {
+  // State hooks for songs, current song index, and loading state
+  const [songs, setSongs] = useState<Song[]>([]);
+  const [currentSong, setCurrentSong] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
 
+  // Effect hook for fetching playlist data on component mount
   useEffect(() => {
-    const fetchPlaylist = async () => {
+    const fetchSongs = async () => {
       try {
-        const response = await fetch('https://raw.githubusercontent.com/atlas-jswank/atlas-music-player-api/main/playlist');
-        const result = await response.json();
-        setData(result);
+        const response = await fetch(
+          "https://raw.githubusercontent.com/atlas-jswank/atlas-music-player-api/main/playlist"
+        );
+        const data = await response.json();
+        setSongs(data);
       } catch (error) {
-        console.error('Error fetching playlist:', error);
+        console.error("Failed to fetch playlist:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchPlaylist();
+    fetchSongs();
   }, []);
 
-  return { data, loading };
-};
-
-export default usePlaylistData;
+  return {
+    songs,
+    currentSong,
+    setCurrentSong,
+    loading
+  };
+}

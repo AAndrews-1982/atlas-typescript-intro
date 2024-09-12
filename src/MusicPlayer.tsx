@@ -1,24 +1,21 @@
-import React, { useContext } from 'react';
-import PlayControls from './components/PlayControls';
-import PlayList from './components/PlayList';
-import { AppContext } from './components/AppContext'; // Updated import
+// Import React for JSX handling
 
-const MusicPlayer: React.FC = () => {
-    const context = useContext(AppContext);
+import React from "react";
 
-    if (!context) {
-        return <div>Loading...</div>; // Render a loading state while the context is undefined
-    }
+// Define types for MusicPlayer props
 
-    const { songs } = context;
-    
-    return (
-        <div className="music-player">
-            <PlayList songList={songs} />
-            <PlayControls songList={songs} />
-            {/* Other components like CoverArt, SongTitle, etc. */}
-        </div>
-    );
+interface MusicPlayerProps {
+  children: React.ReactNode;
+}
+
+// Functional component for MusicPlayer
+
+const MusicPlayer: React.FC<MusicPlayerProps> = ({ children }) => {
+  return (
+    <div className="music-player-container flex flex-col md:flex-row max-w-4xl rounded-lg shadow-lg bg-player-background dark:bg-dark-player-background justify-center">
+      {children}
+    </div>
+  );
 };
 
 export default MusicPlayer;

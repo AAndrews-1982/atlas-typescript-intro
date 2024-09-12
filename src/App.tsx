@@ -1,15 +1,27 @@
-// src/App.tsx
-
 import Footer from "./components/Footer";
 import MusicPlayer from "./MusicPlayer";
-import PlayList from "./components/PlayList";
-import CurrentlyPlaying from "./components/CurrentlyPlaying";
-import { AppContextProvider } from "./components/AppContext"; // Import the AppContextProvider
+import { PlayList } from "./components/PlayList";
+import { CurrentlyPlaying } from "./components/CurrentlyPlaying";
+import { ContextProvider as AppContextProvider } from "./components/AppContext";
+import { usePlaylistData } from "./hooks/usePlaylistData";
+import { BarLoader } from "react-spinners";
 
-function App() {
+const App = () => {
+  // Access playlist loading state
+  const { loading } = usePlaylistData();
+
+  // Show loading spinner while fetching data
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-main-background dark:bg-dark-main-background">
+        <BarLoader color="#00B2A9" height={30} width={400} loading={loading} />
+      </div>
+    );
+  }
+
   return (
     <AppContextProvider>
-      <div className="flex h-full text-dark-text-color bg-main-background min-h-screen flex-col justify-between items-center p-8">
+      <div className="flex flex-col justify-between items-center min-h-screen bg-main-background dark:bg-dark-main-background p-8">
         <MusicPlayer>
           <CurrentlyPlaying />
           <PlayList />
@@ -18,6 +30,6 @@ function App() {
       </div>
     </AppContextProvider>
   );
-}
+};
 
 export default App;
