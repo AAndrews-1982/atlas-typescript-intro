@@ -1,44 +1,49 @@
 // Import necessary hooks from React
 import { useState, useEffect } from "react";
 
-// Define the type for Song
-type Song = {
+// Type definition for Song
+interface ISong {
   title: string;
   artist: string;
   duration: string;
   cover: string;
 };
 
+// Function to fetch songs data
+const fetchSongsData = async (): Promise<ISong[]> => {
+  const endpoint = "https://raw.githubusercontent.com/atlas-jswank/atlas-music-player-api/main/playlist";
+  const response = await fetch(endpoint);
+  if (!response.ok) throw new Error("Network response was not ok");
+  return response.json();
+};
+
 // Custom hook for fetching and managing playlist data
-export function usePlaylistData() {
-  // State hooks for songs, current song index, and loading state
-  const [songs, setSongs] = useState<Song[]>([]);
-  const [currentSong, setCurrentSong] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(true);
+export const usePlaylistData = () => {
+  const [songs, setSongs] = useState<ISong[]>([]);
+  const [currentSongIndex, setCurrentSongIndex] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  // Effect hook for fetching playlist data on component mount
+  // Helper function to handle song data fetching
+  const initializeSongs = async () => {
+    try {
+      const songsData = await fetchSongsData();
+      setSongs(songsData);
+    } catch (error) {
+      console.error("Failed to fetch playlist:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Initialize playlist on component mount
   useEffect(() => {
-    const fetchSongs = async () => {
-      try {
-        const response = await fetch(
-          "https://raw.githubusercontent.com/atlas-jswank/atlas-music-player-api/main/playlist"
-        );
-        const data = await response.json();
-        setSongs(data);
-      } catch (error) {
-        console.error("Failed to fetch playlist:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSongs();
+    initializeSongs();
   }, []);
 
   return {
     songs,
-    currentSong,
-    setCurrentSong,
-    loading
+    currentSong: currentSongIndex,
+    setCurrentSong: setCurrentSongIndex,
+    loading: isLoading
   };
-}
+};

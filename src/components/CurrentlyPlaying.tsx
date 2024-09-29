@@ -1,30 +1,45 @@
-// Import necessary components
-import { CoverArt } from "./CoverArt";
-import { PlayControls } from "./PlayControls";
-import { SongTitle } from "./SongTitle";
-import { VolumeControl } from "./VolumeControl";
+// src/components/CurrentlyPlaying.tsx
 
-// Define and export the CurrentlyPlaying component
-export function CurrentlyPlaying() {
-  // Render the component
+import CoverArt from "./CoverArt";
+import PlayControls from "./PlayControls";
+import SongTitle from "./SongTitle";
+import VolumeControl from "./VolumeControl";
+import React from "react";
+
+// A functional component for displaying the currently playing song with its controls
+const CurrentlyPlaying: React.FC = () => {
   return (
-    <section className="currently-playing-container flex flex-col items-center p-6 w-full md:w-1/2">
-      {/* Display the cover art */}
-      <div className="cover-art-wrapper mb-4">
-        <CoverArt />
-      </div>
-      {/* Display the song title */}
-      <div className="song-title-wrapper mb-4">
-        <SongTitle />
-      </div>
-      {/* Display the play controls */}
-      <div className="play-controls-wrapper mb-4">
-        <PlayControls />
-      </div>
-      {/* Display the volume control */}
-      <div className="volume-control-wrapper">
-        <VolumeControl />
-      </div>
+    <section className="currently-playing-container mx-auto p-4 md:p-8 bg-white shadow-md rounded-lg bg-gray-800">
+      <CoverArtWrapper />
+      <SongInfo />
+      <Controls />
     </section>
   );
-}
+};
+
+// Wrapper component for the cover art
+const CoverArtWrapper: React.FC = () => (
+  <div className="cover-art-wrapper mb-4">
+    <CoverArt />
+  </div>
+);
+
+// Component to display song title
+const SongInfo: React.FC = () => (
+  <div className="song-info mt-4">
+    <SongTitle />
+  </div>
+);
+
+// Component to display controls including play controls and volume control
+const Controls: React.FC = () => (
+  <div className="controls mt-6 flex flex-col items-center">
+    <PlayControls />
+    <div className="volume-control mt-4 w-full">
+      <VolumeControl />
+    </div>
+  </div>
+);
+
+export default CurrentlyPlaying;
+

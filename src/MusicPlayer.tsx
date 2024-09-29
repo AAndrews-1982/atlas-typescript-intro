@@ -1,21 +1,18 @@
-// Import React for JSX handling
+// src/components/MusicPlayer.tsx
 
 import React from "react";
 
-// Define types for MusicPlayer props
+// Enhanced type definitions for flexibility and future-proofing
+type PropsWithChildren<P = {}> = P & { children: React.ReactNode };
 
-interface MusicPlayerProps {
-  children: React.ReactNode;
-}
-
-// Functional component for MusicPlayer
-
-const MusicPlayer: React.FC<MusicPlayerProps> = ({ children }) => {
+// Using a generic functional component with extended types
+function MusicPlayer<T extends PropsWithChildren>({ children }: T): JSX.Element {
   return (
-    <div className="music-player-container flex flex-col md:flex-row max-w-4xl rounded-lg shadow-lg bg-player-background dark:bg-dark-player-background justify-center">
+    <div className="music-container bg-primary dark:bg-dark-player-background flex flex-wrap md:flex-nowrap max-w-4xl mx-auto rounded-md shadow-md">
       {children}
     </div>
   );
-};
+}
 
 export default MusicPlayer;
+

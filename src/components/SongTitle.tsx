@@ -1,40 +1,34 @@
-// Import necessary hooks and context
-import { useContext } from "react";
-import { AppContext } from "./AppContext";
+// src/components/SongTitle.tsx
 
-// Define and export the SongTitle component
-export function SongTitle() {
-  // Access the app context
-  const context = useContext(AppContext);
+import React, { useContext } from "react";
+import AppContext from "./AppContext";
 
-  // Throw an error if context is not available
-  if (!context) {
-    throw new Error("AppContext is not available");
+// Functional component with TypeScript for displaying the current song's title and artist
+const SongTitle: React.FC = () => {
+  const { songs, currentSong } = useContext(AppContext);
+
+  if (!songs || songs.length === 0) {
+    return (
+      <div className="song-details">
+        <h2 className="loading-title mb-2 text-3xl font-bold">Loading...</h2>
+        <p className="loading-artist mb-4 text-lg text-muted-text dark:text-dark-muted-text">Please wait...</p>
+      </div>
+    );
   }
 
-  // Destructure values from the context
-  const { currentSong, songs } = context;
+  const song = songs[currentSong];
 
   return (
     <div className="song-details">
-      {songs.length > 0 ? (
-        <>
-          <h2 className="song-title mb-2 text-3xl font-bold">
-            {songs[currentSong].title}
-          </h2>
-          <div className="artist-name mb-4 text-lg text-muted-text dark:text-dark-muted-text">
-            {songs[currentSong].artist}
-          </div>
-        </>
-      ) : (
-        <>
-          <h2 className="loading-title mb-2 text-3xl font-bold">Loading...</h2>
-          <div className="loading-artist mb-4 text-lg text-muted-text dark:text-dark-muted-text">
-            Loading...
-          </div>
-        </>
-      )}
+      <h2 className="title mb-3 text-xl font-semibold">
+        {song.title}
+      </h2>
+      <p className="artist-name text-sm text-gray-500 dark:text-gray-400">
+        {song.artist}
+      </p>
     </div>
   );
-}
+};
+
+export default SongTitle;
 

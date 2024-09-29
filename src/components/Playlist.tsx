@@ -1,27 +1,26 @@
-// Import necessary components and context
-import { PlayListItem } from "./PlayListItem";
-import { useContext } from "react";
-import { AppContext } from "./AppContext";
+// src/components/PlayList.tsx
 
-// Define and export the PlayList component
-export function PlayList() {
-  // Access the app context
-  const context = useContext(AppContext);
+import React, { useContext } from "react";
+import PlayListItem from "./PlayListItem";
+import AppContext from "./AppContext";
 
-  // Throw an error if context is not available
-  if (!context) {
-    throw new Error("AppContext is not available");
+interface Song {
+  title: string;
+  artist: string;
+  duration: string;
+}
+
+const PlayList: React.FC = () => {
+  const { songs } = useContext(AppContext) as { songs: Song[] };
+
+  if (!songs) {
+    return <div>Loading...</div>; // Optionally handle loading state more gracefully
   }
 
-  // Destructure songs from the context
-  const { songs } = context;
-
   return (
-    <div className="playlist-container w-full p-6 md:w-1/2 md:border-l md:border-muted-text dark:md:border-dark-muted-text">
-      {/* Playlist Title */}
-      <h3 className="playlist-title mb-4 text-xl font-semibold">Playlist</h3>
-      {/* List of all songs */}
-      <div className="songs-list flex flex-col pr-4">
+    <div className="playlist-container w-full p-4 md:w-1/2 md:border-l border-gray-300 dark:border-gray-600">
+      <h3 className="playlist-title mb-5 text-lg font-bold">Playlist</h3>
+      <div className="songs-list space-y-3 overflow-y-auto pr-2">
         {songs.map((song, index) => (
           <PlayListItem
             key={index}
@@ -33,4 +32,7 @@ export function PlayList() {
       </div>
     </div>
   );
-}
+};
+
+export default PlayList;
+

@@ -1,35 +1,46 @@
+// src/App.tsx
+
 import Footer from "./components/Footer";
 import MusicPlayer from "./MusicPlayer";
-import { PlayList } from "./components/PlayList";
-import { CurrentlyPlaying } from "./components/CurrentlyPlaying";
-import { ContextProvider as AppContextProvider } from "./components/AppContext";
+import PlayList from "./components/PlayList";
+import CurrentlyPlaying from "./components/CurrentlyPlaying";
+import { AppContext } from "./components/AppContext";
 import { usePlaylistData } from "./hooks/usePlaylistData";
 import { BarLoader } from "react-spinners";
 
-const App = () => {
-  // Access playlist loading state
+interface LoaderProps {
+  isLoading: boolean;
+}
+
+const LoadingScreen: React.FC<LoaderProps> = ({ isLoading }) => (
+  <div className="flex justify-center items-center min-h-screen bg-primary dark:bg-dark-primary">
+    <BarLoader color="#00B2A9" height={30} width={400} loading={isLoading} />
+  </div>
+);
+
+const AppLayout: React.FC = ({ children }) => (
+  <div className="flex h-full text-dark-text-color bg-primary min-h-screen flex-col justify-between items-center p-8">
+    {children}
+  </div>
+);
+
+const App: React.FC = () => {
   const { loading } = usePlaylistData();
 
-  // Show loading spinner while fetching data
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen bg-main-background dark:bg-dark-main-background">
-        <BarLoader color="#00B2A9" height={30} width={400} loading={loading} />
-      </div>
-    );
-  }
+  if (loading) return <LoadingScreen isLoading={loading} />;
 
   return (
     <AppContextProvider>
-      <div className="flex flex-col justify-between items-center min-h-screen bg-main-background dark:bg-dark-main-background p-8">
+      <AppLayout>
         <MusicPlayer>
           <CurrentlyPlaying />
           <PlayList />
         </MusicPlayer>
         <Footer />
-      </div>
+      </AppLayout>
     </AppContextProvider>
   );
 };
 
 export default App;
+

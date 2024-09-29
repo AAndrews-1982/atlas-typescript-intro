@@ -24,7 +24,7 @@ interface ContextProviderProps {
 export const AppContext = createContext<AppContextProps | undefined>(undefined);
 
 // ContextProvider component
-export const ContextProvider: React.FC<ContextProviderProps> = ({ children }) => {
+export const AppContextProvider: React.FC<ContextProviderProps> = ({ children }) => {
   // Use custom hook to get playlist data and state management functions
   const { songs, currentSong, setCurrentSong } = usePlaylistData();
 
@@ -34,3 +34,5 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({ children }) =>
     </AppContext.Provider>
   );
 };
+
+export default AppContext;

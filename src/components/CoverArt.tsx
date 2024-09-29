@@ -1,38 +1,32 @@
-// Import necessary modules, hooks, and assets
+// src/components/CoverArt.tsx
+
 import React, { useContext } from "react";
-import { AppContext } from "./AppContext";
+import AppContext from "./AppContext";
 import placeholderImage from "../assets/placeholder.svg";
 
-// Defines the CoverArt component
-export function CoverArt() {
-  // Retrieve context values
-  const context = useContext(AppContext);
+// Strongly type the context expected structure
+interface IAppContext {
+  currentSong: number;
+  songs: { cover: string }[];
+}
 
-  // Throw error if context is not available
-  if (!context) {
-    throw new Error("AppContext not available");
-  }
+export const CoverArt: React.FC = () => {
+  const { currentSong, songs } = useContext(AppContext) as IAppContext;
 
-  const { currentSong, songs } = context;
+  // Determine the image source based on songs availability
+  const imageSrc = songs.length > 0 ? songs[currentSong].cover : placeholderImage;
+  const altText = songs.length > 0 ? "Current Song Cover Art" : "Loading Placeholder";
 
   return (
-    <div className="cover-art-container mb-6">
-      {songs.length ? (
-	// Render cover art of currently playing song
-        <img
-          src={songs[currentSong].cover}
-          alt="Current Song Cover Art"
-          className="cover-art-img rounded-md"
-        />
-      ) : (
-        // Displays a Placeholder image while song data is loading
-        <img
-          src={placeholderImage}
-          alt="Loading Placeholder"
-          className="placeholder-img animate-pulse rounded-md"
-        />
-      )}
+    <div className="p-4 border border-gray-300 rounded-lg shadow-sm bg-secondary">
+      <img
+        src={imageSrc}
+        alt={altText}
+        className="rounded-lg w-full h-auto animate-pulse"
+      />
     </div>
   );
-}
+};
+
+export default CoverArt;
 
