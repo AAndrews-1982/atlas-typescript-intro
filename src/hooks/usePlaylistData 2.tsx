@@ -11,7 +11,8 @@ interface ISong {
 
 // Function to fetch songs data
 const fetchSongsData = async (): Promise<ISong[]> => {
-  const endpoint = "https://raw.githubusercontent.com/atlas-jswank/atlas-music-player-api/main/playlist";
+  const endpoint = "https://raw.githubusercontent.com/atlas-jswank/atlas-music-player-api/
+main/playlist";
   const response = await fetch(endpoint);
   if (!response.ok) throw new Error("Network response was not ok");
   return response.json();

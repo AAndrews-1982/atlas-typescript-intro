@@ -1,8 +1,6 @@
-// Import necessary modules and hooks
 import React, { createContext, ReactNode } from "react";
 import { usePlaylistData } from "../hooks/usePlaylistData";
 
-// Define types for the context and props
 interface Song {
   title: string;
   artist: string;
@@ -20,12 +18,11 @@ interface ContextProviderProps {
   children: ReactNode;
 }
 
-// Create the context with a default value of undefined
+// Create the context with a default value
 export const AppContext = createContext<AppContextProps | undefined>(undefined);
 
-// ContextProvider component
-export const AppContextProvider: React.FC<ContextProviderProps> = ({ children }) => {
-  // Use custom hook to get playlist data and state management functions
+// Default export for AppContextProvider
+const AppContextProvider: React.FC<ContextProviderProps> = ({ children }) => {
   const { songs, currentSong, setCurrentSong } = usePlaylistData();
 
   return (
@@ -35,4 +32,4 @@ export const AppContextProvider: React.FC<ContextProviderProps> = ({ children })
   );
 };
 
-export default AppContext;
+export default AppContextProvider;
