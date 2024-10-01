@@ -1,7 +1,7 @@
 // src/components/CoverArt.tsx
 
 import React, { useContext } from "react";
-import AppContext from "./AppContext";
+import { AppContext } from "./AppContext";
 import placeholderImage from "../assets/placeholder.svg";
 
 // Strongly type the context expected structure
@@ -22,7 +22,7 @@ export const CoverArt: React.FC = () => {
       <img
         src={imageSrc}
         alt={altText}
-        className="rounded-lg w-full h-auto animate-pulse"
+        className="rounded-lg w-full h-auto"
       />
     </div>
   );

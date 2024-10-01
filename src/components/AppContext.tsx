@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode } from "react";
+import React, { createContext, ReactNode, useContext } from "react";
 import { usePlaylistData } from "../hooks/usePlaylistData";
 
 interface Song {
@@ -30,6 +30,15 @@ const AppContextProvider: React.FC<ContextProviderProps> = ({ children }) => {
       {children}
     </AppContext.Provider>
   );
+};
+
+// Helper hook to use the context
+export const useAppContext = (): AppContextProps => {
+  const context = useContext(AppContext);
+  if (!context) {
+    throw new Error("useAppContext must be used within an AppContextProvider");
+  }
+  return context;
 };
 
 export default AppContextProvider;

@@ -1,7 +1,7 @@
 // src/components/PlayListItem.tsx
 
 import React, { useContext } from "react";
-import AppContext from "./AppContext";
+import { AppContext } from "./AppContext";
 
 interface PlayListItemProps {
   songTitle: string;
@@ -22,12 +22,16 @@ const PlayListItem: React.FC<PlayListItemProps> = ({ songTitle, artist, playTime
   const isActive = songs.some(song => song.title === songTitle && song.isPlaying);
 
   return (
-    <div onClick={handleSongSelection} className={`playlist-item-container mb-2 flex h-12 cursor-pointer items-center justify-between rounded-lg text-base font-normal bg-transparent ${isActive ? "bg-active dark:bg-dark-active" : "hover:bg-gray-200 dark:hover:bg-gray-700 active:bg-gray-400 dark:active:bg-gray-900"}`}>
+    <div 
+	onClick={handleSongSelection} 
+	className={`playlist-item-container mb-2 flex h-12 cursor-pointer items-center justify-between rounded-lg text-base font-normal bg-transparent ${isActive 
+	? "bg-active" 
+	: "hover:bg-blue-400"}`}>
       <div className="song-details">
-        <div className="title font-semibold text-gray-800 dark:text-gray-200">{songTitle}</div>
-        <div className="artist-name text-sm text-gray-500 dark:text-gray-300">{artist}</div>
+        <div className="title font-bold text-gray-500">{songTitle}</div>
+        <div className="artist-name text-sm font-semibold text-black">{artist}</div>
       </div>
-      <div className="duration text-gray-500 dark:text-gray-300">{playTime}</div>
+      <div className="duration text-black">{playTime}</div>
     </div>
   );
 };

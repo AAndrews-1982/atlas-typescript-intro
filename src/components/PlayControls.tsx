@@ -1,30 +1,33 @@
 // src/components/PlayControls.tsx
+
 import { RewindIcon } from "./icons/RewindIcon";
 import { PlayIcon } from "./icons/PlayIcon";
 import { ForwardIcon } from "./icons/ForwardIcon";
 import { ShuffleIcon } from "./icons/ShuffleIcon";
 import { useEffect, useState, useContext } from "react";
-import AppContext from "./AppContext";
+import { AppContext } from "./AppContext";
 import { PauseIcon } from "./icons/PauseIcon";
 import { ShuffleOffIcon } from "./icons/ShuffleOffIcon";
 
-// Functional component for handling play controls with better TypeScript utilization
+// Functional component for handling play controls
 const PlayControls: React.FC = () => {
   const { songs, currentSong, setCurrentSong } = useContext(AppContext);
-  const [playStatus, setPlayStatus] = useState({ playing: false, shuffle: false, speed: 1 });
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isShuffling, setIsShuffling] = useState(false);
+  const [speed, setSpeed] = useState(1);
 
   // Increment playback speed, reset to 1x after 3x
-  const incrementSpeed = () => setPlayStatus({ ...playStatus, speed: playStatus.speed % 3 + 1 });
+  const incrementSpeed = () => setSpeed((prevSpeed) => (prevSpeed % 3) + 1);
 
   // Toggle play/pause status
-  const togglePlayPause = () => setPlayStatus({ ...playStatus, playing: !playStatus.playing });
+  const togglePlayPause = () => setIsPlaying((prevPlaying) => !prevPlaying);
 
   // Toggle shuffle status
-  const toggleShuffle = () => setPlayStatus({ ...playStatus, shuffle: !playStatus.shuffle });
+  const toggleShuffle = () => setIsShuffling((prevShuffle) => !prevShuffle);
 
-  // Go to the next or random song
+  // Go to the next song (shuffled if shuffle is enabled)
   const goToNextSong = () => {
-    const nextIndex = playStatus.shuffle
+    const nextIndex = isShuffling
       ? Math.floor(Math.random() * songs.length)
       : (currentSong + 1) % songs.length;
     setCurrentSong(nextIndex);
@@ -38,11 +41,11 @@ const PlayControls: React.FC = () => {
 
   return (
     <div className="controls-container mb-4 flex items-center justify-between space-x-2.5">
-      <ButtonControl label="Speed" onClick={incrementSpeed} icon={<span>{playStatus.speed}x</span>} />
-      <ButtonControl label="Rewind" onClick={goToPreviousSong} icon={<RewindIcon />} disabled={currentSong === 0 && !playStatus.shuffle} />
-      <ButtonControl label="Play/Pause" onClick={togglePlayPause} icon={playStatus.playing ? <PauseIcon /> : <PlayIcon />} />
+      <ButtonControl label="Speed" onClick={incrementSpeed} icon={<span>{speed}x</span>} />
+      <ButtonControl label="Rewind" onClick={goToPreviousSong} icon={<RewindIcon />} disabled={currentSong === 0 && !isShuffling} />
+      <ButtonControl label="Play/Pause" onClick={togglePlayPause} icon={isPlaying ? <PauseIcon /> : <PlayIcon />} />
       <ButtonControl label="Forward" onClick={goToNextSong} icon={<ForwardIcon />} />
-      <ButtonControl label="Shuffle" onClick={toggleShuffle} icon={playStatus.shuffle ? <ShuffleIcon /> : <ShuffleOffIcon />} />
+      <ButtonControl label="Shuffle" onClick={toggleShuffle} icon={isShuffling ? <ShuffleIcon /> : <ShuffleOffIcon />} />
     </div>
   );
 };
@@ -60,4 +63,3 @@ const ButtonControl: React.FC<{ label: string, onClick: () => void, icon: JSX.El
 );
 
 export default PlayControls;
-

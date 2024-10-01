@@ -4,7 +4,7 @@ import Footer from "./components/Footer";
 import MusicPlayer from "./MusicPlayer";
 import PlayList from "./components/PlayList";
 import CurrentlyPlaying from "./components/CurrentlyPlaying";
-import ContextProvider from "./components/AppContext";  // Correct import
+import AppContextProvider from "./components/AppContext";
 import { usePlaylistData } from "./hooks/usePlaylistData";
 import { BarLoader } from "react-spinners";
 
@@ -30,7 +30,7 @@ const App: React.FC = () => {
   if (loading) return <LoadingScreen isLoading={loading} />;
 
   return (
-    <ContextProvider> {/* Use the correct provider name */}
+    <AppContextProvider>
       <AppLayout>
         <MusicPlayer>
           <CurrentlyPlaying />
@@ -38,7 +38,7 @@ const App: React.FC = () => {
         </MusicPlayer>
         <Footer />
       </AppLayout>
-    </ContextProvider>
+    </AppContextProvider>
   );
 };
 
